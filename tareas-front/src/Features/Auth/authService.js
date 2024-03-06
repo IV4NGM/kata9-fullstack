@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'https://courageous-duck-top-coat.cyclic.app/api/users/'
+const API_URL = 'https://kata8-backend-avanzado.onrender.com/api/users/'
 
 // Creamos la petición al backend para crear un usuario
 const register = async (userData) => {
@@ -9,8 +9,26 @@ const register = async (userData) => {
   return response.data
 }
 
+// Creamos la petición al backend para login usuario
+const login = async (userData) => {
+  const response = await axios.post(API_URL + 'login', userData)
+
+  if (response.data) {
+    localStorage.setItem('user', JSON.stringify(response.data))
+  }
+
+  return response.data
+}
+
+// Logout a un usuario
+const logout = () => {
+  localStorage.removeItem('user')
+}
+
 const authService = {
-  register
+  register,
+  login,
+  logout
 }
 
 export default authService
