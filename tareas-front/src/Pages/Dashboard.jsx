@@ -11,7 +11,7 @@ const Dashboard = () => {
   const dispatch = useDispatch()
 
   const { user } = useSelector((state) => state.auth)
-  const { tareas, isLoading, isError, isSuccess, message } = useSelector((state) => state.tarea)
+  const { tareas, isLoading, isError, message } = useSelector((state) => state.tarea)
 
   useEffect(() => {
     if (isError) {
@@ -20,14 +20,13 @@ const Dashboard = () => {
 
     if (!user) {
       navigate('/login')
+    } else {
+      dispatch(getTareas())
     }
 
-    dispatch(getTareas())
-
-    // dispatch(reset())
-    // return () => {
-    //   dispatch(reset())
-    // }
+    return () => {
+      dispatch(reset())
+    }
   }, [user, navigate, isError, message, dispatch])
 
   if (isLoading) {
@@ -51,10 +50,10 @@ const Dashboard = () => {
 
               )}
             </div>
-          )
+            )
           : (
             <h3>No hay tareas para mostrar</h3>
-          )}
+            )}
       </section>
     </>
   )
